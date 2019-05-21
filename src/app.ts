@@ -15,6 +15,10 @@ enum Category {
   Angular
 };
 
+interface DamageLogger {
+  (reason: string): void;
+}
+
 interface Book {
   id: number;
   title: string;
@@ -22,7 +26,22 @@ interface Book {
   available: boolean;
   category: Category;
   pages?: number;
-  markDamaged?: (reason: string) => void;
+  // markDamaged?: (reason: string) => void;
+  markDamaged?: DamageLogger;
+}
+
+interface Person {
+  name: string;
+  email: string;
+}
+
+interface Author extends Person {
+  numBooksPublished: number;
+}
+
+interface Librarian extends Person {
+  department: string;
+  assistCustomer: (custName: string) => void;
 }
 
 function getAllBooks(): Book[] {
@@ -152,6 +171,16 @@ const printBook = (book: Book): void => {
   console.log(`${book.title} by ${book.author}`);
 };
 
+class UniversityLibrarian implements Librarian {
+  name: string;
+  email: string;
+  department: string;
+
+  assistCustomer(custName: string): void {
+    console.log(`${this.name} is assisting ${custName}`);
+  }
+}
+
 // =======================================================================================================
 
 // Task 01
@@ -202,15 +231,38 @@ const printBook = (book: Book): void => {
 // console.log(getTitles("Lea Verou"));
 
 // Task 07
-const myBook: Book = {
-  id: 5,
-  title: "Colors, Backgrounds, and Gradients",
-  author: "Eric A. Meyer",
-  available: true,
-  category: Category.CSS,
-  pages: 200,
-  markDamaged: (reason: string) => console.log(`Damaged: ${reason}`),
-};
+// const myBook: Book = {
+//   id: 5,
+//   title: "Colors, Backgrounds, and Gradients",
+//   author: "Eric A. Meyer",
+//   available: true,
+//   category: Category.CSS,
+//   pages: 200,
+//   markDamaged: (reason: string) => console.log(`Damaged: ${reason}`),
+// };
 
-printBook(myBook);
-myBook.markDamaged('Missing back cover');
+// printBook(myBook);
+// myBook.markDamaged('Missing back cover');
+
+// Task 08
+// const logDamage: DamageLogger = (reason: string) => console.log(`Damage reported: ${reason}`);
+// logDamage('stain');
+
+// Task 09
+// const favoriteAuthor: Author = {
+//   name: 'Anna',
+//   email: 'anna@gmail.com',
+//   numBooksPublished: 10
+// }
+
+// const favoriteLibrarian: Librarian = {
+//   name: 'Boris',
+//   email: 'boris@tut.by',
+//   department: 'Classical Literature',
+//   assistCustomer: name => console.log(name),
+// }
+
+// Task 10
+const favoriteLibrarian: Librarian = new UniversityLibrarian();
+favoriteLibrarian.name = 'Anna';
+favoriteLibrarian.assistCustomer('Boris');

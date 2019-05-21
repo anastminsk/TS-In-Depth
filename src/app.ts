@@ -5,31 +5,53 @@ function showHello(divName: string, name: string) {
   elt.innerText = `Hello from ${name}`;
 }
 
-enum Category { JavaScript, CSS, HTML, TypeScript, Angular }; 
+// -------------------------------------------------------------------------------------
 
-function getAllBooks(): any[] {
-  const books: any[] = [
+enum Category { 
+  JavaScript,
+  CSS,
+  HTML,
+  TypeScript,
+  Angular
+};
+
+interface Book {
+  id: number;
+  title: string;
+  author: string;
+  available: boolean;
+  category: Category;
+  pages?: number;
+  markDamaged?: (reason: string) => void;
+}
+
+function getAllBooks(): Book[] {
+  const books: Book[] = [
     {
-      title: "Refactoring JavaScript",
-      author: "Evan Burchard",
+      id: 1,
+      title: 'Refactoring JavaScript',
+      author: 'Evan Burchard',
       available: true,
       category: Category.JavaScript,
     },
     {
-      title: "JavaScript Testing",
-      author: "Liang Yuxian Eugene",
+      id: 2,
+      title: 'JavaScript Testing',
+      author: 'Liang Yuxian Eugene',
       available: false,
       category: Category.JavaScript,
     },
     { 
-      title: "CSS Secrets", 
-      author: "Lea Verou", 
+      id: 3,
+      title: 'CSS Secrets', 
+      author: 'Lea Verou', 
       available: true,
       category: Category.CSS,
     },
     {
-      title: "Mastering JavaScript Object-Oriented Programming",
-      author: "Andrea Chiarelli",
+      id: 4,
+      title: 'Mastering JavaScript Object-Oriented Programming',
+      author: 'Andrea Chiarelli',
       available: true,
       category: Category.JavaScript,
     }
@@ -38,7 +60,7 @@ function getAllBooks(): any[] {
   return books;
 }
 
-function logFirstAvailable(books: any[]): void {
+function logFirstAvailable(books: any[] = getAllBooks()): void {
   const numberOfBooks: number = books.length;
   let titleFirstAvailable: string = '';
 
@@ -54,7 +76,7 @@ function logFirstAvailable(books: any[]): void {
 
 }
 
-function getBookTitlesByCategory(category: Category): Array<string> {
+function getBookTitlesByCategory(category: Category = Category.JavaScript): Array<string> {
   const books: any[] = getAllBooks();
   const titles: string[] = [];
 
@@ -73,11 +95,122 @@ function logBookTitles(titles: string[]): void {
   }
 }
 
+function getBookByID(id: number): Book {
+  const books = getAllBooks();
+  return books.find(book => book.id === id);
+}
+
+function createCustomerID(name: string, id: number): string {
+  return `${name}${id}`;
+}
+
+function createCustomer(name: string, age?: number, city?: string): void {
+  console.log(`Customer name: ${name}`);
+
+  if (age) {
+    console.log(`Age: ${age}`);
+  }
+
+  if (city) {
+    console.log(`City: ${city}`);
+  }
+}
+
+function checkoutBooks(customer: string, ...bookIDs: number[]): string[] {
+  console.log(`Customer name: ${customer}`);
+  const titles: string[] = [];
+
+  bookIDs.forEach(id => {
+    const book = getBookByID(id);
+    if (book && book.available) {
+      titles.push(book.title);
+    }
+  });
+
+  return titles;
+}
+
+function getTitles(author: string): string[];
+function getTitles(available: boolean): string[];
+function getTitles(prop: string | boolean): string[] {
+  const books = getAllBooks();
+  switch (typeof prop) {
+    case "string": {
+      return books
+        .filter(book => book.author === prop)
+        .map(book => book.title);
+    }
+    case "boolean": {
+      return books
+        .filter(book => book.available === prop)
+        .map(book => book.title);
+    }
+  }
+}
+
+const printBook = (book: Book): void => {
+  console.log(`${book.title} by ${book.author}`);
+};
+
 // =======================================================================================================
 
 // Task 01
-logFirstAvailable(getAllBooks());
+// logFirstAvailable(getAllBooks());
 
 // Task 02
-const titles: string[] = getBookTitlesByCategory(Category.JavaScript);
-logBookTitles(titles);
+// const titles: string[] = getBookTitlesByCategory(Category.JavaScript);
+// logBookTitles(titles);
+
+// Task 03
+// const titles: string[] = getBookTitlesByCategory(Category.JavaScript);
+// titles.forEach((title: string, idx: number) => console.log(`${idx} - ${title}`));
+
+// const book = getBookByID(1);
+// console.log(book);
+
+// Task 04
+// let myID = createCustomerID('Ann', 10);
+// console.log(myID);
+
+// let idGenerator: (name: string, id: number) => string;
+// idGenerator = (name: string, id: number) => `${name}${id}`;
+
+// idGenerator = createCustomerID;
+// myID = idGenerator('Boris', 20);
+// console.log(myID);
+
+// Task 05
+// createCustomer('Anna');
+// createCustomer('Boris', 30);
+// createCustomer('Clara', 35, 'Kiev');
+
+// const titles = getBookTitlesByCategory();
+// console.log(titles);
+
+// const titles1 = getBookTitlesByCategory(Category.CSS);
+// console.log(titles1);
+
+// logFirstAvailable();
+
+// const myBooks: string[] = checkoutBooks('Anna', 1, 2, 4);
+// console.log(myBooks);
+
+// Task 06
+// const checkedOutBooks: string[] = getTitles(true);
+// checkedOutBooks.forEach(book => console.log(book));
+// console.log(getTitles(true));
+// console.log(getTitles("Lea Verou"));
+
+// Task 07
+const myBook: Book = {
+  id: 5,
+  title: "Colors, Backgrounds, and Gradients",
+  author: "Eric A. Meyer",
+  available: true,
+  category: Category.CSS,
+  pages: 200,
+  markDamaged: (reason: string) => console.log(`Damaged: ${reason}`),
+};
+
+printBook(myBook);
+myBook.markDamaged('Missing back cover');

@@ -7,7 +7,7 @@ function showHello(divName: string, name: string) {
 
 // -------------------------------------------------------------------------------------
 
-enum Category { 
+enum Category {
   JavaScript,
   CSS,
   HTML,
@@ -60,10 +60,10 @@ function getAllBooks(): Book[] {
       available: false,
       category: Category.JavaScript,
     },
-    { 
+    {
       id: 3,
-      title: 'CSS Secrets', 
-      author: 'Lea Verou', 
+      title: 'CSS Secrets',
+      author: 'Lea Verou',
       available: true,
       category: Category.CSS,
     },
@@ -154,12 +154,12 @@ function getTitles(available: boolean): string[];
 function getTitles(prop: string | boolean): string[] {
   const books = getAllBooks();
   switch (typeof prop) {
-    case "string": {
+    case 'string': {
       return books
         .filter(book => book.author === prop)
         .map(book => book.title);
     }
-    case "boolean": {
+    case 'boolean': {
       return books
         .filter(book => book.available === prop)
         .map(book => book.title);

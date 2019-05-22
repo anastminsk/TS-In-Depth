@@ -181,6 +181,38 @@ class UniversityLibrarian implements Librarian {
   }
 }
 
+class ReferenceItem {
+  // title: string;
+  // year: number;
+
+  // constructor(newTitle: string, newYear: number) {
+  //   console.log('Creating a new ReferenceItem...');
+  //   this.title = newTitle;
+  //   this.year = newYear;
+  // }
+
+  private _publisher: string;
+
+  static department: string = 'Fiction Literature';
+
+  get publisher(): string {
+    return this._publisher.toUpperCase();
+  }
+
+  set publisher(newPublisher: string) {
+    this._publisher = newPublisher;
+  }
+
+  constructor(public title: string, private year: number) {
+    console.log('Creating a new ReferenceItem...');
+  }
+
+  printItem(): void {
+    console.log(`${this.title} was published in ${this.year}`);
+    console.log(`Department: ${ReferenceItem.department}`);
+  }
+}
+
 // =======================================================================================================
 
 // Task 01
@@ -263,6 +295,12 @@ class UniversityLibrarian implements Librarian {
 // }
 
 // Task 10
-const favoriteLibrarian: Librarian = new UniversityLibrarian();
-favoriteLibrarian.name = 'Anna';
-favoriteLibrarian.assistCustomer('Boris');
+// const favoriteLibrarian: Librarian = new UniversityLibrarian();
+// favoriteLibrarian.name = 'Anna';
+// favoriteLibrarian.assistCustomer('Boris');
+
+// Task 11
+const ref: ReferenceItem = new ReferenceItem('ReferenceItem Title', 2019);
+ref.printItem();
+ref.publisher = 'Rendom Publisher'; // setter works
+console.log(ref.publisher); // getter works

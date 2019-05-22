@@ -181,16 +181,7 @@ class UniversityLibrarian implements Librarian {
   }
 }
 
-class ReferenceItem {
-  // title: string;
-  // year: number;
-
-  // constructor(newTitle: string, newYear: number) {
-  //   console.log('Creating a new ReferenceItem...');
-  //   this.title = newTitle;
-  //   this.year = newYear;
-  // }
-
+abstract class ReferenceItem {
   private _publisher: string;
 
   static department: string = 'Fiction Literature';
@@ -203,13 +194,30 @@ class ReferenceItem {
     this._publisher = newPublisher;
   }
 
-  constructor(public title: string, private year: number) {
+  constructor(public title: string, protected year: number) {
     console.log('Creating a new ReferenceItem...');
   }
 
   printItem(): void {
     console.log(`${this.title} was published in ${this.year}`);
     console.log(`Department: ${ReferenceItem.department}`);
+  }
+
+  abstract printCitation(): void;
+}
+
+class Encyclopedia extends ReferenceItem {
+  constructor(newTitle: string, newYear: number, public edition: number) {
+    super(newTitle, newYear);
+  }
+
+  printItem(): void {
+    super.printItem();
+    console.log(`Edition: ${this.edition} (${this.year})`);
+  }
+
+  printCitation(): void {
+    console.log(`${this.title} - ${this.year}`);
   }
 }
 
@@ -300,7 +308,13 @@ class ReferenceItem {
 // favoriteLibrarian.assistCustomer('Boris');
 
 // Task 11
-const ref: ReferenceItem = new ReferenceItem('ReferenceItem Title', 2019);
-ref.printItem();
-ref.publisher = 'Rendom Publisher'; // setter works
-console.log(ref.publisher); // getter works
+// const ref: ReferenceItem = new ReferenceItem('ReferenceItem Title', 2019);
+// ref.printItem();
+// ref.publisher = 'Rendom Publisher'; // setter works
+// console.log(ref.publisher); // getter works
+
+// Task 12-13
+const refBook: Encyclopedia = new Encyclopedia('WordPress', 2000, 10);
+refBook.printItem();
+console.log(refBook);
+refBook.printCitation();

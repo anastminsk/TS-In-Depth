@@ -1,4 +1,4 @@
-import { ReferenceItem } from './classes';
+import { ReferenceItem } from '../classes/referenceItem';
 
 export default class Encyclopedia extends ReferenceItem {
   constructor(newTitle: string, newYear: number, public edition: number) {

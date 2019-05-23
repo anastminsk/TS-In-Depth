@@ -1,7 +1,7 @@
 import { Category } from './NamespaceDemo/enums';
 import { Author, Book, Librarian, Logger } from './NamespaceDemo/interfaces';
-import { ReferenceItem, UniversityLibrarian } from './NamespaceDemo/classes';
-import RefBook from './NamespaceDemo/encyclopedia';
+import { ReferenceItem, UniversityLibrarian } from './classes';
+import RefBook from './classes/encyclopedia';
 
 showHello('greeting', 'TypeScript');
 

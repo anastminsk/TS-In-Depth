@@ -1,6 +1,7 @@
 import { Category } from './NamespaceDemo/enums';
 import { Author, Book, Librarian, Logger } from './NamespaceDemo/interfaces';
 import { ReferenceItem, UniversityLibrarian } from './NamespaceDemo/classes';
+import RefBook from './NamespaceDemo/encyclopedia';
 
 showHello('greeting', 'TypeScript');
 
@@ -138,21 +139,6 @@ const printBook = (book: Book): void => {
   console.log(`${book.title} by ${book.author}`);
 };
 
-class Encyclopedia extends ReferenceItem {
-  constructor(newTitle: string, newYear: number, public edition: number) {
-    super(newTitle, newYear);
-  }
-
-  printItem(): void {
-    super.printItem();
-    console.log(`Edition: ${this.edition} (${this.year})`);
-  }
-
-  printCitation(): void {
-    console.log(`${this.title} - ${this.year}`);
-  }
-}
-
 // =======================================================================================================
 
 // Task 01
@@ -246,7 +232,7 @@ class Encyclopedia extends ReferenceItem {
 // console.log(ref.publisher); // getter works
 
 // Task 12-13
-// const refBook: Encyclopedia = new Encyclopedia('WordPress', 2000, 10);
-// refBook.printItem();
-// console.log(refBook);
-// refBook.printCitation();
+const refBook: RefBook = new RefBook('WordPress', 2000, 10);
+refBook.printItem();
+console.log(refBook);
+refBook.printCitation();

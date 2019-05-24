@@ -1,7 +1,8 @@
 import { Category } from './NamespaceDemo/enums';
-import { Author, Book, Librarian, Logger } from './NamespaceDemo/interfaces';
-import { ReferenceItem, UniversityLibrarian } from './classes';
+import { Author, Book, Librarian, Logger, Magazine } from './NamespaceDemo/interfaces';
+import { ReferenceItem, UniversityLibrarian, Shelf } from './classes';
 import RefBook from './classes/encyclopedia';
+import { purge } from './lib/utility-functions';
 
 showHello('greeting', 'TypeScript');
 
@@ -232,7 +233,68 @@ const printBook = (book: Book): void => {
 // console.log(ref.publisher); // getter works
 
 // Task 12-13
-const refBook: RefBook = new RefBook('WordPress', 2000, 10);
-refBook.printItem();
-console.log(refBook);
-refBook.printCitation();
+// const refBook: RefBook = new RefBook('WordPress', 2000, 10);
+// refBook.printItem();
+// console.log(refBook);
+// refBook.printCitation();
+
+// Task 18
+const inventory: Array<Book> = [
+  {
+    id: 10,
+    title: 'The C Programming Language',
+    author: 'K & R',
+    available: true,
+    category: Category.Software
+  },
+  {
+    id: 11,
+    title: 'Code Complete',
+    author: 'Steve McConnell',
+    available: true,
+    category: Category.Software
+  },
+  {
+    id: 12,
+    title: '8-Bit Graphics with Cobol',
+    author: 'A. B.',
+    available: true,
+    category: Category.Software
+  },
+  {
+    id: 13,
+    title: 'Cool autoexec.bat Scripts!',
+    author: 'C. D.',
+    available: true,
+    category: Category.Software
+  }
+];
+
+// const books: Array<Book> = purge<Book>(inventory);
+// console.log(books);
+
+// const nums: number[] = purge<number>([1, 2, 3, 4]);
+// console.log(nums);
+
+// Task 19
+const bookShelf: Shelf<Book> = new Shelf<Book>();
+inventory.forEach(book => bookShelf.add(book));
+const firstBook: Book = bookShelf.getFirst();
+console.log(firstBook);
+
+const magazines: Array<Magazine> = [
+  { title: 'Programming Language Monthly', publisher: 'Code Mags' },
+  { title: 'Literary Fiction Quarterly', publisher: 'College Press' },
+  { title: 'Five Points', publisher: 'GSU' }
+];
+
+const magazineShelf: Shelf<Magazine> = new Shelf<Magazine>();
+magazines.forEach(mag => magazineShelf.add(mag));
+const firstMagazine: Magazine = magazineShelf.getFirst();
+console.log(firstMagazine);
+
+// Task 20
+magazineShelf.printTitles();
+const mag: Magazine = magazineShelf.find('Five Points');
+console.log(mag);
+

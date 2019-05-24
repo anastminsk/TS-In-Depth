@@ -1,4 +1,4 @@
-import * as Interfaces from '../NamespaceDemo/interfaces.ts';
+import * as Interfaces from '../NamespaceDemo/interfaces';
 
 export class UniversityLibrarian implements Interfaces.Librarian {
   name: string;

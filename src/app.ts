@@ -3,6 +3,7 @@ import { Author, Book, Librarian, Logger, Magazine } from './NamespaceDemo/inter
 import { ReferenceItem, UniversityLibrarian, Shelf } from './classes';
 import RefBook from './classes/encyclopedia';
 import { purge } from './lib/utility-functions';
+import Encyclopedia from './classes/encyclopedia';
 
 showHello('greeting', 'TypeScript');
 
@@ -301,7 +302,20 @@ const printBook = (book: Book): void => {
 // console.log(mag);
 
 // Task 23
-const favoriteLibrarian: UniversityLibrarian = new UniversityLibrarian();
-favoriteLibrarian.assistFaculty = () => console.log('123');
-favoriteLibrarian.teachCommunity = () => console.log('000');
+// const favoriteLibrarian: UniversityLibrarian = new UniversityLibrarian();
+// favoriteLibrarian.assistFaculty = () => console.log('123');
+// favoriteLibrarian.teachCommunity = () => console.log('000');
 
+// Task 24
+// const enc = new Encyclopedia('Title', 2019, 10);
+// enc.printItem();
+
+// Task 25, 26
+const l = new UniversityLibrarian();
+l.name = 'Anna';
+l.assistCustomer('Boris');
+console.log(l.name);
+
+// Task 27
+const enc = new Encyclopedia('Title', 2019, 10);
+enc.copies = -10;

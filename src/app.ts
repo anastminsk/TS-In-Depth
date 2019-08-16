@@ -2,7 +2,14 @@ import { Category } from './NamespaceDemo/enums';
 import { Author, Book, Librarian, Logger, Magazine } from './NamespaceDemo/interfaces';
 import { ReferenceItem, UniversityLibrarian, Shelf } from './classes';
 import RefBook from './classes/encyclopedia';
-import { purge } from './lib/utility-functions';
+import {
+  purge,
+  getAllBooks,
+  getBooksByCategory,
+  logCategorySearch,
+  getBooksByCategoryPromise,
+  logSearchResults
+} from './lib/utility-functions';
 import Encyclopedia from './classes/encyclopedia';
 
 showHello('greeting', 'TypeScript');
@@ -13,41 +20,6 @@ function showHello(divName: string, name: string) {
 }
 
 // -------------------------------------------------------------------------------------
-
-function getAllBooks(): Book[] {
-  const books: Book[] = [
-    {
-      id: 1,
-      title: 'Refactoring JavaScript',
-      author: 'Evan Burchard',
-      available: true,
-      category: Category.JavaScript,
-    },
-    {
-      id: 2,
-      title: 'JavaScript Testing',
-      author: 'Liang Yuxian Eugene',
-      available: false,
-      category: Category.JavaScript,
-    },
-    {
-      id: 3,
-      title: 'CSS Secrets',
-      author: 'Lea Verou',
-      available: true,
-      category: Category.CSS,
-    },
-    {
-      id: 4,
-      title: 'Mastering JavaScript Object-Oriented Programming',
-      author: 'Andrea Chiarelli',
-      available: true,
-      category: Category.JavaScript,
-    }
-  ];
-
-  return books;
-}
 
 function logFirstAvailable(books: any[] = getAllBooks()): void {
   const numberOfBooks: number = books.length;
@@ -63,19 +35,6 @@ function logFirstAvailable(books: any[] = getAllBooks()): void {
   console.log(`Total Books: ${numberOfBooks}`);
   console.log(`Title of First Available Book: ${titleFirstAvailable}`);
 
-}
-
-function getBookTitlesByCategory(category: Category = Category.JavaScript): Array<string> {
-  const books: any[] = getAllBooks();
-  const titles: string[] = [];
-
-  for (const book of books) {
-    if (book.category === category) {
-      titles.push(book.title);
-    }
-  }
-
-  return titles;
 }
 
 function logBookTitles(titles: string[]): void {
@@ -311,11 +270,36 @@ const printBook = (book: Book): void => {
 // enc.printItem();
 
 // Task 25, 26
-const l = new UniversityLibrarian();
-l.name = 'Anna';
-l.assistCustomer('Boris');
-console.log(l.name);
+// const l = new UniversityLibrarian();
+// l.name = 'Anna';
+// l.assistCustomer('Boris');
+// console.log(l.name);
 
 // Task 27
-const enc = new Encyclopedia('Title', 2019, 10);
-enc.copies = -10;
+// const enc = new Encyclopedia('Title', 2019, 10);
+// enc.copies = -10;
+
+// Task 28
+// getBooksByCategory(Category.JavaScript, logCategorySearch);
+// getBooksByCategory(Category.Software, logCategorySearch);
+
+// Task 29
+// getBooksByCategoryPromise(Category.JavaScript)
+//   .then(titles => console.log(titles))
+//   .catch(err => console.log(err));
+
+// getBooksByCategoryPromise(Category.Software)
+//   .then(titles => console.log(titles))
+//   .catch(err => console.log(err));
+
+// Task 30
+console.log('Beginning search...');
+logSearchResults(Category.JavaScript)
+    .catch(reason => console.log(reason));
+console.log('Search submitted...');
+
+
+console.log('Beginning search...');
+logSearchResults(Category.Software)
+    .catch(reason => console.log(reason));
+console.log('Search submitted...');
